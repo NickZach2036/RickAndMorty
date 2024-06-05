@@ -57,4 +57,12 @@ public class Competition {
         }
         return false;
     }
+
+    public void startCompetition() {
+        ExecutorService executorService = Executors.newFixedThreadPool(ACTIVE_INSTANCES);
+        for (RickAndMorty instance : activeInstances) {
+            executorService.execute(new Journey(instance, worldOccupancy, this));
+        }
+        executorService.shutdown();
+    }
 }
