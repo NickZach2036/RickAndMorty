@@ -40,22 +40,22 @@ public class Competition {
 
     boolean resolveEncounter(RickAndMorty instance1, RickAndMorty instance2) throws Exception {
         Random random = new Random();
-        if (instance1.getPowerUps() > instance1.getPowerUps()) {
+        if (instance1.getPowerUps() > instance2.getPowerUps()) {
             if (!allInstances.isEmpty()) {
                 activeInstances.remove(instance2);
                 activeInstances.add(allInstances.remove(0));
             } else {
-                throw new Exception();
+                throw new Exception("No more instances available");
             }
         } else {
             if (!allInstances.isEmpty()) {
                 activeInstances.remove(instance1);
                 activeInstances.add(allInstances.remove(0));
             } else {
-                throw new Exception();
+                throw new Exception("No more instances available");
             }
         }
-        return false;
+        return true;
     }
 
     public void startCompetition() {

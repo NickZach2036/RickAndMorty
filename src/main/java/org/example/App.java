@@ -1,13 +1,10 @@
 package org.example;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import org.example.Services.Competition;
+
+public class App {
+    public static void main(String[] args) {
+        Competition competition = new Competition();
+        competition.startCompetition();
     }
 }
