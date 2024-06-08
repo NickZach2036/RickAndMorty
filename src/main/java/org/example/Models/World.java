@@ -6,11 +6,13 @@ public class World {
     private final String name;
     private boolean flag;
     private int gems;
+    private boolean hasChallenge;
 
-    public World(String name, int gems) {
+    public World(String name, int gems, boolean hasChallenge) {
         this.name = name;
         this.flag = false;
         this.gems = gems;
+        this.hasChallenge = hasChallenge;
     }
 
     public synchronized boolean takeFlag(RickAndMorty instance) {
@@ -44,5 +46,9 @@ public class World {
 
     public int getGems() {
         return gems;
+    }
+
+    public boolean hasChallenge() {
+        return hasChallenge;
     }
 }

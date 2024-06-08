@@ -86,9 +86,13 @@ public class Competition {
 
     public synchronized void handleConflict(RickAndMorty instance, World world) {
         if (world.takeFlag(instance)) {
-            instance.stopInstance();
-            System.out.printf("Rick and Morty %d killed by another instance at %s\n", instance.getId(), world.getName());
-            changeActiveInstances();
+            if (instance.getId() == 1) {
+                System.out.printf("Rick Prime (%d) killed another instance at %s.\n", instance.getId(), world.getName());
+            } else {
+                instance.stopInstance();
+                System.out.printf("Rick and Morty %d killed by another instance at %s\n", instance.getId(), world.getName());
+                changeActiveInstances();
+            }
         }
     }
 
