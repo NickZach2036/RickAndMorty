@@ -35,7 +35,7 @@ public class RickAndMorty extends Thread {
         }
     }
 
-    private void travelAndCollect() {
+    public void travelAndCollect() {
         if (currentWorld != null) {
             synchronized (currentWorld) {
                 if (currentWorld.isFlag() && !flag) {
