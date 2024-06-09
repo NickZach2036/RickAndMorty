@@ -2,9 +2,6 @@ package org.example.Threads;
 
 import org.example.Models.World;
 import org.example.Services.Competition;
-import org.example.Threads.WorldClock;
-
-import java.util.Random;
 
 public class RickAndMorty extends Thread {
     private final int id;
@@ -36,7 +33,7 @@ public class RickAndMorty extends Thread {
         }
     }
 
-    private synchronized void travelAndCollect() {
+    public synchronized void travelAndCollect() {
         currentWorld = worldClock.getCurrentWorld();
         synchronized (currentWorld) {
             if (!currentWorld.isFlag()) {
@@ -70,4 +67,7 @@ public class RickAndMorty extends Thread {
         return currentWorld;
     }
 
+    public boolean isRunning() {
+        return running;
+    }
 }

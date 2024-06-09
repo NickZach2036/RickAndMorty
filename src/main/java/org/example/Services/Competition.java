@@ -32,6 +32,7 @@ public class Competition {
             WorldClock worldClock = worldClocks[i % 5];
             allInstances.add(new RickAndMorty(i, this, worldClock));
         }
+        System.out.println("Initialized " + allInstances.size() + " instances.");  // Debugging line
     }
 
     private void initializeActiveInstances() {
@@ -39,6 +40,7 @@ public class Competition {
         for (int i = 0; i < ACTIVE_INSTANCES; i++) {
             activeInstances.add(allInstances.remove(0));
         }
+        System.out.println("Initialized " + activeInstances.size() + " active instances.");  // Debugging line
     }
 
     public void startCompetition() {
@@ -107,5 +109,18 @@ public class Competition {
         }
         System.out.println("Race finished. Program is stopping.");
         System.exit(0);
+    }
+
+    // Getter methods for testing
+    public List<RickAndMorty> getAllInstances() {
+        return allInstances;
+    }
+
+    public List<RickAndMorty> getActiveInstances() {
+        return activeInstances;
+    }
+
+    public WorldClock[] getWorldClocks() {
+        return worldClocks;
     }
 }

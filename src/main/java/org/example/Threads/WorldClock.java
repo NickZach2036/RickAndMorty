@@ -27,7 +27,7 @@ public class WorldClock extends Thread {
         }
     }
 
-    private void changeWorld() {
+    public void changeWorld() {
         synchronized (currentWorld) {
             currentWorld.releaseFlag();
         }
@@ -43,5 +43,9 @@ public class WorldClock extends Thread {
 
     public void stopClock() {
         running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }
