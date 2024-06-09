@@ -36,10 +36,16 @@ public class Competition {
     }
 
     private void initializeActiveInstances() {
+        Set<World> usedWorlds = new HashSet<>();
         Collections.shuffle(allInstances);
         for (int i = 0; i < ACTIVE_INSTANCES; i++) {
             RickAndMorty instance = allInstances.remove(0);
-            instance.setCurrentWorld(worlds[i]);
+            World initialWorld;
+            do {
+                initialWorld = worlds[new Random().nextInt(worlds.length)];
+            } while (usedWorlds.contains(initialWorld));
+            usedWorlds.add(initialWorld);
+            instance.setCurrentWorld(initialWorld);
             activeInstances.add(instance);
         }
     }
@@ -83,12 +89,32 @@ public class Competition {
     }
 
     public synchronized void handleConflict(RickAndMorty instance, World world) {
-        if (!world.takeFlag(instance)) {
-            instance.stopInstance();
-            System.out.printf("Rick and Morty %d killed by another instance at %s\n", instance.getId(), world.getName());
-            changeActiveInstances();
-        } else if (instance.getId() == 1) {
-            System.out.printf("Rick Prime (%d) killed another instance at %s.\n", instance.getId(), world.getName());
+        List<RickAndMorty> instancesOnWorld = new ArrayList<>();
+        for (RickAndMorty activeInstance : activeInstances) {
+            if (activeInstance.getCurrentWorld() == world && activeInstance != instance) {
+                instancesOnWorld.add(activeInstance);
+            }
+        }
+
+        if (!instancesOnWorld.isEmpty()) {
+            if (instance.getId() == 1) {
+                for (RickAndMorty otherInstance : instancesOnWorld) {
+                    otherInstance.stopInstance();
+                    System.out.printf("Rick Prime (%d) killed Rick and Morty %d at %s.\n", instance.getId(), otherInstance.getId(), world.getName());
+                    changeActiveInstances();
+                }
+            } else {
+                RickAndMorty otherInstance = instancesOnWorld.get(0); // Избираме първия в списъка
+                if (otherInstance.getId() == 1) {
+                    instance.stopInstance();
+                    System.out.printf("Rick Prime (%d) killed Rick and Morty %d at %s.\n", otherInstance.getId(), instance.getId(), world.getName());
+                    changeActiveInstances();
+                } else {
+                    instance.stopInstance();
+                    System.out.printf("Rick and Morty %d killed Rick and Morty %d at %s.\n", otherInstance.getId(), instance.getId(), world.getName());
+                    changeActiveInstances();
+                }
+            }
         }
     }
 

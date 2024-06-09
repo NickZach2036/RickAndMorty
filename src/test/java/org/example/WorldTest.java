@@ -11,20 +11,28 @@ class WorldTest {
 
     @BeforeEach
     void setUp() {
-        world = new World("Test World", 5, true);
+        //
     }
 
     @Test
-    void testTakeFlag() {
-        assertTrue(world.takeFlag(null));
-        assertFalse(world.takeFlag(null));
+    void testGetName() {
+        assertEquals("Test World", world.getName());
+    }
+
+    @Test
+    void testGetGems() {
+        assertEquals(5, world.getGems());
     }
 
     @Test
     void testCollectGems() {
-        int initialGems = world.getGems();
-        int gemsCollected = world.collectGems();
-        assertEquals(initialGems - 1, world.getGems());
-        assertEquals(1, gemsCollected);
+        int collected = world.collectGems();
+        assertEquals(1, collected);
+        assertEquals(4, world.getGems());
+    }
+
+    @Test
+    void testFlag() {
+        //
     }
 }

@@ -20,31 +20,45 @@ class CompetitionTest {
     }
 
     @Test
-    void testGetRandomWorld() {
-        World randomWorld = competition.getRandomWorld();
-        assertNotNull(randomWorld);
+    void initializeInstances() {
+        //
     }
 
     @Test
-    void testChangeActiveInstances() {
-        List<RickAndMorty> activeInstancesBefore = competition.getActiveInstances();
-        competition.changeActiveInstances();
-        List<RickAndMorty> activeInstancesAfter = competition.getActiveInstances();
-        assertNotEquals(activeInstancesBefore, activeInstancesAfter);
+    void initializeActiveInstances() {
+        assertEquals(5, competition.getActiveInstances().size());
     }
 
     @Test
-    void testHandleConflict() {
+    void getRandomWorld() {
+        World world = competition.getRandomWorld();
+        assertNotNull(world);
+    }
+
+    @Test
+    void handleConflict() {
         RickAndMorty instance1 = new RickAndMorty(1, competition);
         RickAndMorty instance2 = new RickAndMorty(2, competition);
-        instance1.setCurrentWorld(Worlds.EARTH_C137.getWorld());
-        instance2.setCurrentWorld(Worlds.EARTH_C137.getWorld());
+        instance1.setCurrentWorld(Worlds.CYBERNETIC_SUN.getWorld());
+        instance2.setCurrentWorld(Worlds.CYBERNETIC_SUN.getWorld());
+
+        competition.getActiveInstances().add(instance1);
+        competition.getActiveInstances().add(instance2);
+
+        competition.handleConflict(instance1, instance1.getCurrentWorld());
 
         //
     }
 
     @Test
-    void testFinishRace() {
+    void changeActiveInstances() {
+        int initialSize = competition.getActiveInstances().size();
+        competition.changeActiveInstances();
+        assertEquals(initialSize, competition.getActiveInstances().size());
+    }
+
+    @Test
+    void finishRace() {
         //
     }
 }

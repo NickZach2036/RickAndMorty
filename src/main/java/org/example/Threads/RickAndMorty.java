@@ -35,12 +35,11 @@ public class RickAndMorty extends Thread {
         }
     }
 
-    public void travelAndCollect() {
+    private void travelAndCollect() {
         if (currentWorld != null) {
             synchronized (currentWorld) {
-                if (currentWorld.isFlag() && !flag) {
-                    competition.handleConflict(this, currentWorld);
-                } else if (!currentWorld.isFlag()) {
+                competition.handleConflict(this, currentWorld);
+                if (!currentWorld.isFlag()) {
                     currentWorld.takeFlag(this);
                     flag = true;
                     collectedGems += currentWorld.collectGems();
